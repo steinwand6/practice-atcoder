@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use proconio::input;
 fn main() {
-    const M: usize = 2 * 10 ^ 5;
+    const M: usize = 200001;
     input! {
         n: usize,
         ary: [usize;n],
@@ -17,7 +17,7 @@ fn main() {
     }
     let mut ans = 0;
     for a in 1..M {
-        for b in 1..(M / a) {
+        for b in 1..=(M / a) {
             let c = a * b;
             match map.get(&a) {
                 Some(x) => match map.get(&b) {
