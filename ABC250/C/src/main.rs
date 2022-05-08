@@ -1,14 +1,12 @@
-use std::mem;
-
 use proconio;
 
 fn main() {
     proconio::input! {
-        n:u32,
-        q:u32,
-        op:[u32;q],
+        n:usize,
+        q:usize,
+        op:[usize;q],
     }
-    let mut ary = vec![0; n as usize];
+    let mut ary = vec![0; n];
     for i in 0..n {
         ary[i as usize] = i + 1;
     }
@@ -22,21 +20,18 @@ fn main() {
     println!("")
 }
 
-fn solver(mut ary: Vec<u32>, op: Vec<u32>) -> Vec<u32> {
-    let l = ary.len();
-    let op_l = op.len();
-    for i in 0..op_l {
-        let j = ary.iter().position(|x| *x == op[i]);
-        match j {
-            Some(j) => {
-                if j == l - 1 {
-                    ary.swap(j, j - 1);
-                } else {
-                    ary.swap(j, j + 1);
-                }
-            }
-            _ => (),
-        }
+fn solver(mut ary: Vec<usize>, op: Vec<usize>) -> Vec<usize> {
+    let mut pos: Vec<usize> = vec![0; ary.len()];
+    for i in 0..ary.len() {
+        pos[i] = i
+    }
+    for o in op {
+        let p1 = pos[o - 1];
+        let p2 = if p1 == ary.len() - 1 { p1 - 1 } else { p1 + 1 };
+        let v1 = ary[p1];
+        let v2 = ary[p2];
+        ary.swap(p1, p2);
+        pos.swap(v1 - 1, v2 - 1);
     }
     ary
 }
