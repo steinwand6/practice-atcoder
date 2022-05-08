@@ -1,3 +1,5 @@
+use std::mem;
+
 use proconio;
 
 fn main() {
@@ -21,7 +23,6 @@ fn main() {
 }
 
 fn solver(mut ary: Vec<u32>, op: Vec<u32>) -> Vec<u32> {
-    let mut tmp = 0;
     let l = ary.len();
     let op_l = op.len();
     for i in 0..op_l {
@@ -29,13 +30,9 @@ fn solver(mut ary: Vec<u32>, op: Vec<u32>) -> Vec<u32> {
         match j {
             Some(j) => {
                 if j == l - 1 {
-                    tmp = ary[j];
-                    ary[j] = ary[j - 1];
-                    ary[j - 1] = tmp;
+                    ary.swap(j, j - 1);
                 } else {
-                    tmp = ary[j];
-                    ary[j] = ary[j + 1];
-                    ary[j + 1] = tmp;
+                    ary.swap(j, j + 1);
                 }
             }
             _ => (),
