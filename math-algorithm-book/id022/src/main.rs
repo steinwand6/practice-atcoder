@@ -18,14 +18,19 @@ fn choose_cards3(a: Vec<usize>) -> usize {
     let mut result = 0;
     for (k, v) in &hmap {
         let target = hmap.get(&(100000 - *k));
-        println!("{}, {:?}, {}", k, target, v);
         match target {
-            Some(x) if x == v => result += x,
-            Some(x) => result += x * v,
+            Some(x) => {
+                if *k == 50000 {
+                    result += x * (x - 1) / 2
+                } else if *k < 50000 {
+                    result += x * v;
+                }
+            }
+
             None => (),
         }
     }
-    result / 2
+    result
 }
 
 #[cfg(test)]
