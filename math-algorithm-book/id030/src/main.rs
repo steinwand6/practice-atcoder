@@ -24,10 +24,10 @@ fn knapsack(limit: usize, w: Vec<usize>, v: Vec<usize>) -> usize {
             dp[0][i] = v[0];
         }
     }
-    let mut max = 0;
+    let mut max = dp[0][limit - 1];
     for i in 1..w.len() {
         for j in 0..limit {
-            if j < w[i] {
+            if j <= w[i] - 1 {
                 dp[i][j] = dp[i - 1][j];
             } else {
                 dp[i][j] = (dp[i - 1][j]).max(dp[i - 1][j - w[i]] + v[i]);
@@ -59,4 +59,8 @@ fn sample3() {
         knapsack(15, vec![6, 5, 6, 6, 3, 7], vec![5, 6, 4, 6, 5, 2]),
         17
     )
+}
+#[test]
+fn my_test1() {
+    assert_eq!(knapsack(7, vec![7], vec![2]), 2)
 }
