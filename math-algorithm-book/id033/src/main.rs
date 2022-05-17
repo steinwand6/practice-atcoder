@@ -1,3 +1,5 @@
+use proconio::input;
+
 struct Point {
     x: i64,
     y: i64,
@@ -27,7 +29,19 @@ impl Vector {
 }
 
 fn main() {
-    println!("Hello, world!");
+    input! {
+        a: (i64, i64),
+        b: (i64, i64),
+        c: (i64, i64),
+    };
+    println!(
+        "{}",
+        distance(
+            Point { x: a.0, y: a.1 },
+            Point { x: b.0, y: b.1 },
+            Point { x: c.0, y: c.1 }
+        )
+    )
 }
 
 fn distance(a: Point, b: Point, c: Point) -> f64 {
@@ -36,18 +50,18 @@ fn distance(a: Point, b: Point, c: Point) -> f64 {
     let ac = Vector::new(&a, &c);
     let distance = if bc.inner_product(&ba) < 0.0 {
         ba.magnitude()
-    } else if bc.inner_product(&ba) > 0.0 {
+    } else if bc.inner_product(&ac) < 0.0 {
         ac.magnitude()
     } else {
         bc.outer_product(&ba) / bc.magnitude()
     };
-    dbg!(distance)
+    distance
 }
 
 #[test]
 fn magnitute_test() {
-    let vctrA = Vector::new(&Point { x: 1, y: 1 }, &Point { x: 5, y: 4 });
-    assert_eq!(vctrA.magnitude(), 5.0)
+    let vctr_a = Vector::new(&Point { x: 1, y: 1 }, &Point { x: 5, y: 4 });
+    assert_eq!(vctr_a.magnitude(), 5.0)
 }
 
 #[test]
